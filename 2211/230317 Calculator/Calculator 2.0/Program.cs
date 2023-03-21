@@ -8,7 +8,7 @@
             int value1 = 5;
             int value2;
             string operation;
-            string result = null;
+            string result = "";
 
             Console.WriteLine("value1: " + value1);
 
@@ -24,7 +24,7 @@
             {
                 string[] operators = new string[] { "+", "-", "*", ":" };
                 bool tryParse = true;
-                string result = null;
+                string result = "";
 
                 while (tryParse)
                 {
