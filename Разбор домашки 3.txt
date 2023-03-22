@@ -1,0 +1,67 @@
+using System;
+
+namespace таблица_умножения
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            void InputNumber()      //Объявление методов должно быть снизу
+            { Console.WriteLine("Введите любое число"); }
+
+            InputNumber();
+            double number = double.Parse(Console.ReadLine());
+            tr(number); 
+
+
+
+
+           void  tr(double value) //Название метода tr? Что это значит? )
+            {
+                if (number >= 0)
+                {
+                    if ((number * 2) % 2 == 0)
+                    { Integer(); }
+                    else if ((number * 2) % 2 != 0)
+                    { RealNumber(); }
+                }
+                else
+                {
+                    if ((number * 2) % 2 == 0)
+                    { NegativeInteger(); }
+                    else if ((number * 2) % 2 != 0)
+                    { NegativRealNumber(); }
+                }Console.ReadLine();
+            }
+
+
+
+
+          
+
+             void   Integer()
+            { Console.WriteLine("Целое положительное число"); }
+
+            void RealNumber()
+            { Console.WriteLine("Вещественное положительное число"); }
+
+            void NegativeInteger()
+            { Console.WriteLine("Целое отрицательное число"); }
+
+            void NegativRealNumber()
+            { Console.WriteLine("Вещественное отрицательное число"); }
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+    }
+}
