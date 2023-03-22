@@ -1,0 +1,72 @@
+namespace BoolNumberCategory
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Again:
+            double UserValue;
+
+            UserValue = CheckTrueValue("Введите число: ");
+            CheckIntegerValue();
+            CheckPositiveValue();
+
+            //Проверка на правильность введеннго значения
+            double CheckTrueValue(string message)
+            {
+                double result = 0;
+                bool tryParse = true;
+
+                while (tryParse)
+                {
+                    Console.Write(message);
+                    string line = Console.ReadLine();
+
+                    if (double.TryParse(line, out result))
+                    {
+                        tryParse = false;
+                    }
+                    if (tryParse)
+                    {
+                        Console.WriteLine("Не удалось опознать число");
+                        Console.WriteLine();
+                    }
+                }
+                return result;
+            }
+
+            //Проверка целого или вещественного числа
+            void CheckIntegerValue()
+            {
+
+                if (UserValue % 1 == 0)
+                {
+                    Console.Write("Целое");
+                    if (UserValue == 0)
+                    {
+                        Console.Write(" число");
+                    }
+                }
+                else
+                {
+                    Console.Write("Вещественное");
+                }
+            }
+
+            //Проверка положительного или отрицательного числа
+            void CheckPositiveValue()
+            {
+                if (UserValue > 0)
+                {
+                    Console.Write(" положительное чиcло");
+                }
+                if (UserValue < 0)
+                {
+                    Console.Write(" отрицательное чиcло");
+                }
+            }
+            Console.WriteLine("\n");
+            goto Again;
+        }
+    }
+}
