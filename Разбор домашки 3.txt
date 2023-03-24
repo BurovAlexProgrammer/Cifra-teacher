@@ -1,67 +1,104 @@
-using System;
-
-namespace таблица_умножения
+namespace _2_string_methods;
+class Program
 {
-    internal class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+
+        //Вариант с методами на несколько строк
+
+        while (true)
         {
-            void InputNumber()      //Объявление методов должно быть снизу
-            { Console.WriteLine("Введите любое число"); }
+            string _userValue1 = "", _userValue2 = "";
+            float _value = 0;
 
-            InputNumber();
-            double number = double.Parse(Console.ReadLine());
-            tr(number); 
+            _userValue1 = ReadUserValue(_userValue1);
+            _userValue2 = ReadUserValue(_userValue2);
 
-
-
-
-           void  tr(double value) //Название метода tr? Что это значит? )
+            if (Exit(_userValue1))
             {
-                if (number >= 0)
-                {
-                    if ((number * 2) % 2 == 0)
-                    { Integer(); }
-                    else if ((number * 2) % 2 != 0)
-                    { RealNumber(); }
-                }
-                else
-                {
-                    if ((number * 2) % 2 == 0)
-                    { NegativeInteger(); }
-                    else if ((number * 2) % 2 != 0)
-                    { NegativRealNumber(); }
-                }Console.ReadLine();
+                break;
             }
 
+            PrintNumberType(_userValue1, _value);
+            PrintNumberType(_userValue2, _value);
+        }
 
-
-
-          
-
-             void   Integer()
-            { Console.WriteLine("Целое положительное число"); }
-
-            void RealNumber()
-            { Console.WriteLine("Вещественное положительное число"); }
-
-            void NegativeInteger()
-            { Console.WriteLine("Целое отрицательное число"); }
-
-            void NegativRealNumber()
-            { Console.WriteLine("Вещественное отрицательное число"); }
+        Console.ReadKey();
 
 
 
 
+        string ReadUserValue(string userValue)
+        {
+            Console.Write("Введите значение: ");
+            userValue = Console.ReadLine().Replace(",", ".");
+            return userValue;
+        }
 
+        bool Exit(string userValue)
+        {
+            return userValue == "exit";
+        }
 
+        void PrintValue(string massage, float _value)
+        {
+            Console.WriteLine(_value + "  " + "-" + "  " + massage + "\n");
+        }
 
+        void PrintUserValue1(string userValue, string massage1, string massage2)
+        {
+            Console.Write(userValue + "  " + "-" + "  " + massage1 + "." + "\t");
+            Console.WriteLine(massage2 + "  " + "=" + "  " + userValue.Length + "\n");
+        }
 
+        void PrintUserValue2(string userValue, string massage1, string massage2, int result)
+        {
+            Console.Write(userValue + "  " + "-" + "  " + massage1 + "." + "\t");
+            Console.WriteLine(massage2 + "  " + "=" + "  " + result + "\n");
+        }
 
+        void StringSeparate(string userValue)
+        {
+            char[] separators = new char[] { ' ', ',', '.' };
+            string[] words = userValue.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+            int result = words.Length;
 
+            if (result == 1)
+            {
+                PrintUserValue1(userValue, "Слово", "Длина слова");
+            }
+            else
+            {
+                PrintUserValue2(userValue, "Предложение", "Количество слов", result);
+            }
+        }
 
+        void NumberType(float value)
+        {
+            if (value % 1 == 0)
+            {
+                PrintValue("Целое число", value);
+            }
+            else
+            {
+                PrintValue("Вещественное число", value);
+            }
+        }
 
+        void PrintNumberType(string userValue, float value)
+        {
+            bool isNumber = float.TryParse(userValue, out value);
+
+            if (isNumber)
+            {
+                NumberType(value);
+            }
+            else
+            {
+                StringSeparate(userValue);
+            }
         }
     }
 }
+
+
