@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DZ1", "DZ1\DZ1.csproj", "{45089B5C-5525-4B14-A446-ED1C9DB5280F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParseNumber", "ParseNumber\ParseNumber.csproj", "{912F4B99-90E2-4A12-99D0-7C20AB39AF9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{45089B5C-5525-4B14-A446-ED1C9DB5280F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45089B5C-5525-4B14-A446-ED1C9DB5280F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45089B5C-5525-4B14-A446-ED1C9DB5280F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{912F4B99-90E2-4A12-99D0-7C20AB39AF9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{912F4B99-90E2-4A12-99D0-7C20AB39AF9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{912F4B99-90E2-4A12-99D0-7C20AB39AF9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{912F4B99-90E2-4A12-99D0-7C20AB39AF9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
