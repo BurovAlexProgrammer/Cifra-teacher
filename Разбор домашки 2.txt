@@ -1,72 +1,95 @@
-namespace BoolNumberCategory
+namespace Methods;
+class Program
 {
-    internal class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        //Вариант с методами
+
+        while (true)
         {
-            Again:
-            double UserValue;
+            string _userValue;
+            float _value;
 
-            UserValue = CheckTrueValue("Введите число: ");
-            CheckIntegerValue();
-            CheckPositiveValue();
+            _userValue = ReadUserValue();
 
-            //Проверка на правильность введеннго значения
-            double CheckTrueValue(string message)
+            if (Exit(_userValue))
             {
-                double result = 0;
-                bool tryParse = true;
-
-                while (tryParse)
-                {
-                    Console.Write(message);
-                    string line = Console.ReadLine();
-
-                    if (double.TryParse(line, out result))
-                    {
-                        tryParse = false;
-                    }
-                    if (tryParse)
-                    {
-                        Console.WriteLine("Не удалось опознать число");
-                        Console.WriteLine();
-                    }
-                }
-                return result;
+                break;
             }
 
-            //Проверка целого или вещественного числа
-            void CheckIntegerValue()
-            {
+            bool isNumber = float.TryParse(_userValue, out _value);
 
-                if (UserValue % 1 == 0)
-                {
-                    Console.Write("Целое");
-                    if (UserValue == 0)
-                    {
-                        Console.Write(" число");
-                    }
-                }
-                else
-                {
-                    Console.Write("Вещественное");
-                }
-            }
-
-            //Проверка положительного или отрицательного числа
-            void CheckPositiveValue()
+            if (isNumber)
             {
-                if (UserValue > 0)
-                {
-                    Console.Write(" положительное чиcло");
-                }
-                if (UserValue < 0)
-                {
-                    Console.Write(" отрицательное чиcло");
-                }
+                NumberType(_value);
             }
-            Console.WriteLine("\n");
-            goto Again;
+            else
+            {
+                StringSeparate(_userValue);
+            }
+        }
+
+        Console.ReadKey();
+
+
+
+
+        string ReadUserValue()
+        {
+            Console.Write("Введите значение: "); 
+            return Console.ReadLine().Replace(",", ".");
+        }
+
+        bool Exit(string _userValue)
+        {
+            return _userValue == "exit";
+        }
+
+        void PrintValue(string massage, float _value)
+        {
+            Console.WriteLine(_value + "  " + "-" + "  " + massage + "\n");
+        }
+
+        void PrintUserValue1(string _userValue, string massage1, string massage2)
+        {
+            Console.Write(_userValue + "  " + "-" + "  " + massage1 + "." + "\t");
+            Console.WriteLine(massage2 + "  " + "=" + "  " + _userValue.Length + "\n");
+        }
+
+        void PrintUserValue2(string _userValue, string massage1, string massage2, int result)
+        {
+            Console.Write(_userValue + "  " + "-" + "  " + massage1 + "." + "\t");
+            Console.WriteLine(massage2 + "  " + "=" + "  " + result + "\n");
+        }
+
+        void StringSeparate(string _userValue)
+        {
+            char[] separators = new char[] { ' ', ',', '.' };
+            string[] words = _userValue.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+            int result = words.Length;
+
+            if (result == 1)
+            {
+                PrintUserValue1(_userValue, "Слово", "Длина слова");
+            }
+            else
+            {
+                PrintUserValue2(_userValue, "Предложение", "Количество слов", result);
+            }
+        }
+
+        void NumberType(float _value)
+        {
+            if (_value % 1 == 0)
+            {
+                PrintValue("Целое число", _value);
+            }
+            else
+            {
+                PrintValue("Вещественное число", _value);
+            }
         }
     }
 }
+
+
