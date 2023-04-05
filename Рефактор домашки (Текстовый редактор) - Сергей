@@ -1,0 +1,139 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace ReadAndWriteTextFileWithTime
+{
+    class Program
+    {
+        private const string WorkDirectory = "C:\\Brainwash";
+        private const string WorkFile = "MyFile.txt";
+
+        static void Main(string[] args)
+        {
+            bool _isExit = false;
+            const string READ = "read";
+            const string WRITE = "write";
+            const string EXIT = "exit";
+
+
+
+            string _path = GetPath();
+
+            RunCommand(_path);
+
+
+
+
+            // Метод, предоставляющий меню для работы с командами
+            void RunCommand(string path)
+            {
+                while (!_isExit)
+                {
+                    Console.WriteLine("Выберите команду - 1.read, 2.write, 3.exit");
+                    string _comand = Console.ReadLine();
+
+                    switch (_comand)
+                    {
+                        case EXIT:
+                            _isExit = true;
+                            break;
+                        case READ:
+                            PrintFileData(path);
+                            break;
+                        case WRITE:
+                            List<string> newData = ReadUserData(path);
+                            WriteToFile(path, newData);
+                            break;
+                        default:
+                            Console.WriteLine("Неизвестаня команда");
+                            break;
+                    }
+                }
+            }
+
+
+
+
+            /* Метод, обрабатывающий поступающие от пользователя данные
+             * и готовящий их для записи в файл*/
+            List<string> ReadUserData(string path)
+            {
+                List<string> result = new List<string>();
+                bool isWriting = true;
+                string line;
+                string time = DateTime.Now.ToString();
+
+                Console.WriteLine("Введите заголовок");
+
+                string title = Console.ReadLine();
+                result.Add("Дата записи новых данных: " + time);
+                result.Add(" ");
+                result.Add("*****" + title.ToUpper() + "*****");
+
+                Console.WriteLine("Введите свой текст, как закончите - введите команду finish");
+
+                while (isWriting)
+                {
+                    line = Console.ReadLine();
+                    if (line == "finish")
+                    {
+                        result.Add(" ");
+                        isWriting = false;
+                    }
+                    else
+                    {
+                        result.Add(line);
+                    }
+                }
+                return result;
+            }
+
+
+
+            // Метод, записывающий данные в файл
+            void WriteToFile(string path, List<string> userData)
+            {
+                File.WriteAllLines(path, userData);
+            }
+
+
+
+            // Метод, определяющий путь к местоположению файла
+            string GetPath()
+            {
+                string directory = WorkDirectory;
+                string fileName = WorkFile;
+                return Path.Combine(directory, fileName);
+            }
+
+
+            // Метод, позволяющий прочитать содержимое файла в консоли
+            List<string> PrintFileData(string path)
+            {
+                Console.Clear();
+                List<string> lines = new List<string>();
+
+                if (Directory.Exists(WorkDirectory) == false)
+                {
+                    Directory.CreateDirectory(WorkDirectory);
+                }
+                if (!File.Exists(path))
+                {
+                    var steam = File.Create(path);
+                    steam.Close();
+                }
+                lines = File.ReadAllLines(path).ToList();
+                foreach (string item in lines)
+                {
+                    Console.WriteLine(item);
+                }
+
+                return lines;
+            }
+        }
+    }
+}
