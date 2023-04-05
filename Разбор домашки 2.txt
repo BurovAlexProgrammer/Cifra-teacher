@@ -1,95 +1,88 @@
-namespace Methods;
-class Program
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace определение_формата
 {
-    static void Main(string[] args)
+    class Program
     {
-        //Вариант с методами
-
-        while (true)
+        static void Main(string[] args)
         {
-            string _userValue;
-            float _value;
-
-            _userValue = ReadUserValue();
-
-            if (Exit(_userValue))
+            while (true)
             {
-                break;
+                string Letters = null, Letters2 =null;
+
+                
+                Console.Write("Введите значение: ");
+                Letters = Console.ReadLine().Replace(".",",");
+                Console.Write("Введите второе значение: ");
+                Letters2 = Console.ReadLine().Replace(".", ",");
+
+                string[] arr = new string[2] { Letters, Letters2 };//создается массив с введенными значениями
+
+                int intLetters;
+                float floatLetters;
+
+                for (int i = 0; i < 2; i++)
+                {
+
+                    if (checkInt(arr[i]))
+                    {
+                        checkIntOperator(intLetters, i);
+                    }
+
+                    else
+                        if (checkFloat(arr[i]))
+                    {
+                        checkFloatOperator(floatLetters, i);
+                    }
+                   
+                    else
+                    {
+                        Console.WriteLine("Не удалось определить формат");
+                    }
+                }
+                //Функции
+
+                bool checkInt(string UserLetters)
+                {
+                    return int.TryParse(UserLetters, out intLetters);
+                }
+
+                bool checkFloat(string UserLetters)
+                {
+                    return float.TryParse(UserLetters, out floatLetters);
+                    
+                }
+
+                void checkIntOperator(int UserLetters, int counter)
+                {
+                    if (intLetters < 0)
+                    {
+                        Console.WriteLine((counter + 1) + " значение Это отрицательное целое число");
+                    }
+                    else
+                    {
+                        Console.WriteLine((counter + 1) + " значение Это положительное целое число");
+                    }
+                }
+
+                void checkFloatOperator(float UserLetters, int counter)
+                {
+                    if (floatLetters < 0)
+                    {
+                        Console.WriteLine((counter + 1) + " значение Это отрицательное вещественное число");
+                    }
+                    else
+                    {
+                        Console.WriteLine((counter + 1) + " значение Это положительное вещественное число");
+                    }
+                }
+
             }
 
-            bool isNumber = float.TryParse(_userValue, out _value);
-
-            if (isNumber)
-            {
-                NumberType(_value);
-            }
-            else
-            {
-                StringSeparate(_userValue);
-            }
-        }
-
-        Console.ReadKey();
-
-
-
-
-        string ReadUserValue()
-        {
-            Console.Write("Введите значение: "); 
-            return Console.ReadLine().Replace(",", ".");
-        }
-
-        bool Exit(string _userValue)
-        {
-            return _userValue == "exit";
-        }
-
-        void PrintValue(string massage, float _value)
-        {
-            Console.WriteLine(_value + "  " + "-" + "  " + massage + "\n");
-        }
-
-        void PrintUserValue1(string _userValue, string massage1, string massage2)
-        {
-            Console.Write(_userValue + "  " + "-" + "  " + massage1 + "." + "\t");
-            Console.WriteLine(massage2 + "  " + "=" + "  " + _userValue.Length + "\n");
-        }
-
-        void PrintUserValue2(string _userValue, string massage1, string massage2, int result)
-        {
-            Console.Write(_userValue + "  " + "-" + "  " + massage1 + "." + "\t");
-            Console.WriteLine(massage2 + "  " + "=" + "  " + result + "\n");
-        }
-
-        void StringSeparate(string _userValue)
-        {
-            char[] separators = new char[] { ' ', ',', '.' };
-            string[] words = _userValue.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-            int result = words.Length;
-
-            if (result == 1)
-            {
-                PrintUserValue1(_userValue, "Слово", "Длина слова");
-            }
-            else
-            {
-                PrintUserValue2(_userValue, "Предложение", "Количество слов", result);
-            }
-        }
-
-        void NumberType(float _value)
-        {
-            if (_value % 1 == 0)
-            {
-                PrintValue("Целое число", _value);
-            }
-            else
-            {
-                PrintValue("Вещественное число", _value);
-            }
         }
     }
 }
-
-
