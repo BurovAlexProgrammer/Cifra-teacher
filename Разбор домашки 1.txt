@@ -1,57 +1,123 @@
-namespace SN_HW_23._03._23;
-class Program
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace ReadAndWriteTextFileWithTime
 {
-    static void Main(string[] args)
+    class Program
     {
-
-        //Вариант без методов
-
-        while (true)
+        static void Main(string[] args)
         {
-            string _userValue;
-            float _value;
+            List<string> _userData = new List<string>();
+            bool _isExit = false;
+            const string READ = "read";
+            const string WRITE = "write";
+            const string EXIT = "exit";
 
-            Console.Write("Введите значение: ");
-            _userValue = Console.ReadLine().Replace(",", ".");
 
-            if (_userValue == "exit")
+
+            string _path = GetPath();
+
+            MakeCommands(_path);
+
+
+
+
+            // Метод, предоставляющий меню для работы с командами
+            void MakeCommands(string path)
             {
-                break;
+                while (!_isExit)
+                {
+                    Console.WriteLine("Выберите команду - 1.read, 2.write, 3.exit");
+                    string _comand = Console.ReadLine();
+
+                    switch (_comand)
+                    {
+                        case EXIT:
+                            _isExit = true;
+                            break;
+                        case READ:
+                            _userData = ReadFile(path);
+                            break;
+                        case WRITE:
+                            WorkWithOutputUserData(path);
+                            WriteToFile(path, _userData);
+                            break;
+                    }
+                }
             }
 
-            bool isNumber = float.TryParse(_userValue, out _value);
 
-            if (isNumber)
+
+
+            /* Метод, обрабатывающий поступающие от пользователя данные
+             * и готовящий их для записи в файл*/
+            void WorkWithOutputUserData(string path)
             {
-                if (_value % 1 == 0)
+                bool isWriting = true;
+                string line;
+                string time = DateTime.Now.ToString();
+
+                Console.WriteLine("Введите заголовок");
+
+                string title = Console.ReadLine();
+
+                _userData.Add("Дата записи новых данных: " + time);
+                _userData.Add(" ");
+                _userData.Add("*****" + title.ToUpper() + "*****");
+
+                Console.WriteLine("Введите свой текст, как закончите - введите команду finish");
+
+                while (isWriting)
                 {
-                    Console.WriteLine($"{_value} -  Целое число\n");
-                }
-                else
-                {
-                    Console.WriteLine($"{_value} -  Вещественное число\n");
+                    line = Console.ReadLine();
+                    if (line == "finish")
+                    {
+                        _userData.Add(" ");
+                        isWriting = false;
+                    }
+                    else
+                    {
+                        _userData.Add(line);
+                    }
                 }
             }
-            else
-            {
-                char[] separators = new char[] { ' ', ',', '.' };
-                string[] words = _userValue.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-                int result = words.Length;
 
-                if (result == 1)
+
+
+            // Метод, записывающий данные в файл
+            void WriteToFile(string path, List<string> userData)
+            {
+                File.WriteAllLines(path, _userData);
+            }
+
+
+
+            // Метод, определяющий путь к местоположению файла
+            string GetPath()
+            {
+                string directory = "C:\\Brainwash";
+                string fileName = "MyFile.txt";
+                return Path.Combine(directory, fileName);
+            }
+
+
+            // Метод, позволяющий прочитать содержимое файла в консоли
+            List<string> ReadFile(string path)
+            {
+                Console.Clear();
+                List<string> lines = new List<string>();
+                lines = File.ReadAllLines(path).ToList();
+                foreach (string item in lines)
                 {
-                    Console.Write($"{_userValue} -  Слово.\t");
-                    Console.WriteLine($"Длина слова =  {_userValue.Length}\n");
+                    Console.WriteLine(item);
                 }
-                else
-                {
-                    Console.Write($"{_userValue} -  Предложение.\t");
-                    Console.WriteLine($"Количество слов =  {result}\n");
-                }
+
+                return lines;
             }
         }
-
-        Console.ReadKey();
     }
 }
-
